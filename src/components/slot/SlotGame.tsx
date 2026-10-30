@@ -59,7 +59,7 @@ export function SlotGame() {
   const stopOnBonusRef = useRef(stopOnBonus);
   stopOnBonusRef.current = stopOnBonus;
 
-  const bet = BET_LEVELS[betIdx];
+  const bet = BET_LEVELS[betIdx]!;
   const overlay = queue[0];
   const nextOverlay = useCallback(() => setQueue((q) => q.slice(1)), []);
 
@@ -92,16 +92,16 @@ export function SlotGame() {
       const ant = sc >= 2;
       t += i === 0 ? 600 : ant ? 1300 : 230;
       plan.push({ at: t, anticip: ant });
-      sc += target[i].filter((s) => s === "SCAT").length;
+      sc += target[i]!.filter((s) => s === "SCAT").length;
     }
     await new Promise<void>((resolve) => {
       plan.forEach((p, i) => {
         setTimeout(() => {
-          setGrid((g) => g.map((col, r) => (r === i ? target[i] : col)));
+          setGrid((g) => g.map((col, r) => (r === i ? target[i]! : col)));
           setReelSpin((rs) => rs.map((v, r) => (r === i ? false : v)));
           setLanded((n) => n + 1);
           sound.reelStop(i);
-          if (target[i].includes("SCAT")) sound.scatter();
+          if (target[i]!.includes("SCAT")) sound.scatter();
           const nxt = plan[i + 1];
           setAnticip((a) => a.map((_, r) => (nxt?.anticip ? r === i + 1 : false)));
           if (nxt?.anticip) sound.tension();
@@ -230,7 +230,7 @@ export function SlotGame() {
               <div key={r} className={`relative aspect-[1/3] overflow-hidden border-r border-border/40 last:border-r-0 ${anticip[r] ? "reel-anticip" : ""}`}>
                 {reelSpin[r] ? (
                   <div className={`reel-strip absolute inset-x-0 top-0 ${anticip[r] ? "slow" : ""}`}>
-                    {[...STRIPS[r], ...STRIPS[r]].map((s, i) => <SymbolTile key={i} id={s} />)}
+                    {[...STRIPS[r]!, ...STRIPS[r]!].map((s, i) => <SymbolTile key={i} id={s} />)}
                   </div>
                 ) : (
                   <div className="landed">
@@ -253,7 +253,7 @@ export function SlotGame() {
               {lines.map((l, i) => (
                 <polyline key={`${l.line}-${landed}`} className="payline" fill="none" strokeLinecap="round" strokeLinejoin="round"
                   stroke={LINE_COLORS[i % LINE_COLORS.length]} style={{ filter: `drop-shadow(0 0 6px ${LINE_COLORS[i % LINE_COLORS.length]})` }}
-                  points={PAYLINES[l.line].map((row, r) => `${r * 100 + 50},${row * 100 + 50}`).join(" ")} />
+                  points={PAYLINES[l.line]!.map((row, r) => `${r * 100 + 50},${row * 100 + 50}`).join(" ")} />
               ))}
             </svg>
           )}
@@ -351,7 +351,7 @@ export function SlotGame() {
           </DialogHeader>
           <div className="grid gap-3 sm:grid-cols-3">
             {BONUS_BUY.map((o, i) => {
-              const Icon = [Zap, Gem, Sparkles][i];
+              const Icon = [Zap, Gem, Sparkles][i]!;
               const price = o.price * bet;
               return (
                 <div key={o.id} className="panel flex flex-col gap-2 p-4 text-center">
@@ -381,7 +381,7 @@ export function SlotGame() {
                 <div className="min-w-0 text-xs">
                   <div className="truncate font-display text-sm">{SYMBOLS[s].name}</div>
                   {[5, 4, 3].map((n) => (
-                    <div key={n}>{n}× <b className="text-gold">{fmt(SYMBOLS[s].pays[n - 3] * bet / 20)}</b></div>
+                    <div key={n}>{n}× <b className="text-gold">{fmt(SYMBOLS[s].pays[n - 3]! * bet / 20)}</b></div>
                   ))}
                 </div>
               </div>
@@ -390,7 +390,7 @@ export function SlotGame() {
               <div className="w-14 shrink-0"><SymbolTile id="SCAT" /></div>
               <div className="text-xs">
                 <div className="font-display text-sm">Scatter</div>
-                {[5, 4, 3].map((n) => <div key={n}>{n}× <b className="text-gold">{fmt(SCATTER_PAYS[n] * bet)}</b></div>)}
+                {[5, 4, 3].map((n) => <div key={n}>{n}× <b className="text-gold">{fmt(SCATTER_PAYS[n]! * bet)}</b></div>)}
               </div>
             </div>
           </div>

@@ -45,7 +45,7 @@ export function Dashboard() {
   useEffect(() => {
     let i = 0;
     const t = setInterval(() => {
-      const [from, text] = CHATTER[i++ % CHATTER.length];
+      const [from, text] = CHATTER[i++ % CHATTER.length]!;
       store.notify(from, text);
     }, 14000);
     return () => clearInterval(t);

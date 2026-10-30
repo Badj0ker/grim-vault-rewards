@@ -97,7 +97,7 @@ export function BonusEnd({ label, total, onDone }: { label: string; total: numbe
 }
 
 export function VaultOpen({ onReveal }: { onReveal: (b: Bonus) => void }) {
-  const variant = useMemo<BonusType>(() => (["super", "storm", "mega", "free"] as BonusType[])[Math.floor(Math.random() * 4)], []);
+  const variant = useMemo<BonusType>(() => (["super", "storm", "mega", "free"] as BonusType[])[Math.floor(Math.random() * 4)]!, []);
   const [open, setOpen] = useState(false);
   useEffect(() => {
     sound.vault();
