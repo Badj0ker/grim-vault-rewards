@@ -233,7 +233,7 @@ export function SlotGame() {
                     {[...STRIPS[r], ...STRIPS[r]].map((s, i) => <SymbolTile key={i} id={s} />)}
                   </div>
                 ) : (
-                  <div key={landed} className="landed">
+                  <div className="landed">
                     {col.map((s, row) => {
                       const k = `${r}-${row}`;
                       const win = winCells.has(k);
