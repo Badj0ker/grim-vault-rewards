@@ -168,6 +168,7 @@ export function SlotGame() {
       const t = setTimeout(() => spinRef.current(), bonus ? 900 : 650);
       return () => clearTimeout(t);
     }
+    return undefined;
   }, [spinning, overlay, bonus, auto, landed]);
 
   // cycle payline label

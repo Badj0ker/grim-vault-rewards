@@ -26,7 +26,7 @@ const MONTHLY = [
   { name: "@CryptoRaccoon", won: 66900, reward: "100 BFG" },
   { name: "@SpinLord", won: 40110, reward: "50 BFG" },
 ];
-const CHATTER = [
+const CHATTER: [string, string][] = [
   ["@VaultKing", "just cracked a Mystery Vault 🔓"],
   ["@FuryQueen", "x14 multiplier in Free Spins 😱"],
   ["GrimVault Bot", "⚡ Weekly leaderboard resets in 2 days"],

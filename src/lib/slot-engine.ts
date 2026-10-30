@@ -56,8 +56,8 @@ function pick(scatterFactor = 1): SymId {
   const weights = entries.map(([id, s]) => (id === "SCAT" ? s.weight * scatterFactor : s.weight));
   let r = Math.random() * weights.reduce((a, b) => a + b, 0);
   for (let i = 0; i < entries.length; i++) {
-    r -= weights[i];
-    if (r <= 0) return entries[i][0];
+    r -= weights[i]!;
+    if (r <= 0) return entries[i]![0];
   }
   return "T";
 }
@@ -66,12 +66,12 @@ export function generateGrid(bonus: Bonus | null): { grid: Grid; sticky: string[
   const grid: Grid = Array.from({ length: 5 }, () => Array.from({ length: 3 }, () => pick(bonus ? 0.6 : 1)));
   let sticky: string[] = [];
   if (bonus?.type === "storm") {
-    for (let n = 0; n < 3; n++) grid[Math.floor(Math.random() * 5)][Math.floor(Math.random() * 3)] = "WILD";
+    for (let n = 0; n < 3; n++) grid[Math.floor(Math.random() * 5)]![Math.floor(Math.random() * 3)] = "WILD";
   }
   if (bonus?.type === "super") {
     for (const k of bonus.sticky) {
       const [r, row] = k.split("-").map(Number);
-      grid[r!][row!] = "WILD";
+      grid[r!]![row!] = "WILD";
     }
     grid.forEach((col, r) => col.forEach((s, row) => s === "WILD" && sticky.push(`${r}-${row}`)));
     sticky = Array.from(new Set(sticky));
