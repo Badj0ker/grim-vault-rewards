@@ -34,7 +34,7 @@ export function SymbolTile({ id, sticky }: { id: SymId; sticky?: boolean }) {
       {id === "SCAT" && (
         <>
           <div className="absolute inset-[4%] rounded-full" style={{ background: "radial-gradient(circle, color-mix(in oklab, var(--neon-purple) 55%, transparent), transparent 70%)" }} />
-          <img src={scatter.url} alt="Fury scatter mascot" className="scatter-img absolute inset-[6%] h-[88%] w-[88%] object-cover" />
+          <div className="scatter-img absolute inset-[6%] overflow-hidden rounded-full"><img src={scatter.url} alt="Fury scatter mascot" className="h-full w-full object-cover" style={{ transform: "scale(2.3)", transformOrigin: "50% 36%" }} draggable={false} /></div>
           <span className="sym-badge bg-accent text-accent-foreground" style={{ boxShadow: "0 0 14px var(--neon-purple)" }}>SCATTER</span>
         </>
       )}

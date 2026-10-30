@@ -71,7 +71,7 @@ export function generateGrid(bonus: Bonus | null): { grid: Grid; sticky: string[
   if (bonus?.type === "super") {
     for (const k of bonus.sticky) {
       const [r, row] = k.split("-").map(Number);
-      grid[r][row] = "WILD";
+      grid[r!][row!] = "WILD";
     }
     grid.forEach((col, r) => col.forEach((s, row) => s === "WILD" && sticky.push(`${r}-${row}`)));
     sticky = Array.from(new Set(sticky));
@@ -89,7 +89,7 @@ export function evaluate(grid: Grid, bet: number, mult = 1): SpinResult {
   const lineBet = bet / PAYLINES.length;
   const lines: LineWin[] = [];
   PAYLINES.forEach((pl, li) => {
-    const syms = pl.map((row, r) => grid[r][row]);
+    const syms = pl.map((row, r) => grid[r]![row]!);
     if (syms[0] === "SCAT") return;
     const base = syms.find((s) => s !== "WILD") ?? "WILD";
     if (base === "SCAT") {
@@ -102,7 +102,7 @@ export function evaluate(grid: Grid, bet: number, mult = 1): SpinResult {
       else break;
     }
     if (count >= 3) {
-      const win = SYMBOLS[target].pays[count - 3] * lineBet * mult;
+      const win = SYMBOLS[target].pays[count - 3]! * lineBet * mult;
       lines.push({ line: li, sym: target, count, win, cells: pl.slice(0, count).map((row, r) => [r, row]) });
     }
   });
